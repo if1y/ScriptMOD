@@ -6,7 +6,7 @@ export PATH
 #	项目: 网易云音乐解锁
 #	版本: 1.1.3
 #	原作: https://github.com/XIU2/Shell
-#   修改：https://github.com/if1y/ScriptsMOD
+#   修改：https://github.com/if1y/ScriptMOD
 # --------------------------------------------------------------
 
 NOW_VER_SHELL="1.1.3"
@@ -241,11 +241,11 @@ _SET(){
 _PORT_SET() {
 	while true
 		do
-		echo -e "请输入要使用的代理端口。 [1-65535]"
+		echo -e "请输入要使用的代理端口 [1-65535]"
 		echo -e "${TIP} 如果你在本地通过 Hosts 方式使用该代理，那么只能选择 80 端口，格式示例：80"
-		echo -e "${TIP} 如果需要搭配自签证书，那么还需要配置 HTTPS 端口，格式：HTTP:HTTPS，两个端口不能相同，格式示例：80:443"
-		read -e -p "(默认: 80):" PORT
-		[[ -z "${PORT}" ]] && PORT="80"
+		echo -e "${TIP} 正常情况下，配置 HTTP 端口即可。如果搭配自签证书后无法使用，再配置 HTTPS 端口，格式：HTTP:HTTPS，两个端口不能相同，格式示例：16380:16381"
+		read -e -p "(默认: 16380):" PORT
+		[[ -z "${PORT}" ]] && PORT="16380"
 		PORT_FORMAT_DETECTION=$(echo "${PORT}"|grep ":")
 		if [[ -z ${PORT_FORMAT_DETECTION} ]]; then
 				echo $((${PORT}+0)) &>/dev/null
@@ -271,9 +271,10 @@ _PORT_SET() {
 }
 # 修改 音源
 _SOURCE_SET() {
-	echo -e "请输入要使用的音源。 [youtube migu joox qq kugou kuwo bilibili baidu pyncmd]"
-	echo -e "${TIP} 音源之间没有先后顺序区别，程序会同时请求所有设定的音源，并取最早相应的作为结果链接。"
-	echo -e "${TIP} 不同音源之间请用空格隔开。"
+	echo -e "请输入要使用的音源 [youtube migu joox qq kugou kuwo bilibili baidu pyncmd]"
+	echo -e "${TIP} 各音源不区别先后顺序，程序会同时请求所有设定的音源接口，并选取最早响应的链接作为结果"
+	echo -e "${TIP} 不同音源之请用空格隔开"
+	echo -e "${TIP} 默认状态下，流量将被包裹在 Endpoint 中，但连接速度可能受到影响。可改成向客户端传递真实资源地址，但 bilibili 音源将无法正常播放，修改方法见 https://github.com/nondanee/UnblockNeteaseMusic/issues/143#issuecomment-509217052"
 	read -e -p "(默认: youtube migu pyncmd bilibili kuwo):" SOURCE
 	[[ -z "${SOURCE}" ]] && SOURCE="youtube migu pyncmd bilibili kuwo"
 	SOURCE=$(echo "${SOURCE}"|sed -e 's/^ *//g;s/ *$//g')
@@ -283,14 +284,16 @@ _SOURCE_SET() {
 }
 # 修改 严格模式
 _STRICT_SET() {
-	echo -e "是否启用严格模式？[Y/n]"
-	echo -e "${TIP} 启用严格模式后，本代理仅允许网易云音乐域名访问，即本地设备只能通过 Host 或 PAC 使用，强烈建议开启，否则所有设备流量都会经过本代理。"
-	read -e -p "(默认：Y [启用]):" STRICT
-	[[ -z "${STRICT}" ]] && STRICT="Y"
-	if [[ "${STRICT}" == [Yy] ]]; then
-		STRICT="YES"
-	else
+	echo -e "配置严格模式，建议开启以避免被滥用 [Endpoint/N/n]"
+	echo -e "${TIP} 关闭，请输入 N 或 n。"
+	echo -e "${TIP} 开启，请输入对应的 Endpoint，以 http 或 https 开头，末尾无需 / 号"
+	echo -e "${TIP} Endpoint 为 http://music.163.com 时，可能需要改为双端口模式，并为客户端设备安装自签证书。Endpoint 为自有域名时，请为其配置证书，反代回源至 HTTP 端口，并确保访问通畅"
+	read -e -p "(默认：http://music.163.com):" STRICT
+	[[ -z "${STRICT}" ]] && STRICT="http://music.163.com"
+	if [[ "${STRICT}" == [Nn] ]]; then
 		STRICT="NO"
+	else
+		STRICT=$(echo "${STRICT}"|sed -e 's/\/$//g;s/ *//g')
 	fi
 	echo && echo "------------------------"
 	echo -e "	严格模式 : ${RED_BACKGROUND_PREFIX} ${STRICT} ${FONT_COLOR_SUFFIX}"
@@ -298,7 +301,7 @@ _STRICT_SET() {
 }
 # 修改 指定网易服务器 IP
 _FORCEHOST_SET() {
-	echo -e "指定网易服务器 IP，不懂请跳过。[格式：IPv4]"
+	echo -e "指定网易服务器 IP，不懂请跳过 [格式：IPv4]"
 	read -e -p "(默认为空):" FORCEHOST
 	echo && echo "------------------------"
 	echo -e "	指定 IP : ${RED_BACKGROUND_PREFIX} ${FORCEHOST} ${FONT_COLOR_SUFFIX}"

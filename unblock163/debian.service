@@ -48,7 +48,7 @@ _START(){
 		if [[ "${STRICT}" == "NO" ]]; then
 			ARGUMENTS_S="" && ARGUMENTS_E="" && STRICT=""
 		else
-			ARGUMENTS_S="-s" && ARGUMENTS_E="-e" && STRICT="http://music.163.com"
+			ARGUMENTS_S="-s" && ARGUMENTS_E="-e"
 		fi
 		if [[ -z "${FORCEHOST}" ]]; then
 			ARGUMENTS_F=""
