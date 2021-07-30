@@ -4,12 +4,12 @@ export PATH
 # --------------------------------------------------------------
 #	系统: CentOS / Debian / Ubuntu
 #	项目: 网易云音乐解锁
-#	版本: 1.1.3
+#	版本: 1.1.3-if1y
 #	原作: https://github.com/XIU2/Shell
-#   修改：https://github.com/if1y/ScriptMOD
+#	修改：https://github.com/if1y/ScriptMOD
 # --------------------------------------------------------------
 
-NOW_VER_SHELL="1.1.3"
+NOW_VER_SHELL="1.1.3-if1y"
 NEW_VER_NODE_BACKUP="12.16.1"
 FILEPASH=$(cd "$(dirname "$0")"; pwd)
 FILEPASH_NOW=$(echo -e "${FILEPASH}"|awk -F "$0" '{print $1}')
