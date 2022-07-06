@@ -7,7 +7,7 @@ Thanks for all their original authors.
 
 ## Usage
 
-### [mixbench](https://github.com/rshinesun/SuperBench/blob/main/superbench.sh)
+### [mixbench](https://www.idcoffer.com/archives/4764)
 
 ```
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/if1y/ScriptMOD/mixbench/mixbench.sh && chmod +x mixbench.sh && bash mixbench.sh
