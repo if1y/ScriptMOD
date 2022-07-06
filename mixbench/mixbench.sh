@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#https://www.idcoffer.com/archives/4764
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -69,7 +70,7 @@ benchinit() {
 		echo -e "\nARM compatibility is considered *experimental*"
 	else
 		# host is running a non-supported kernel
-		echo -e "Architecture not supported by Superbench."
+		echo -e "Architecture not supported by MixBench."
 		exit 1
 	fi
 
@@ -705,9 +706,9 @@ function StreamingMediaUnlockTest(){
 }
 
 print_intro() {
-	printf ' Superbench.sh -- https://www.idcoffer.com/archives/4764\n' | tee -a $log
+	printf ' MixBench.sh   https://github.com/if1y/ScriptMOD\n' | tee -a $log
 	printf " Mode  : \e${GREEN}%s\e${PLAIN}    Version : \e${GREEN}%s${PLAIN}\n" $mode_name 1.3.5 | tee -a $log
-	printf ' Usage : bash <(wget -O- https://down.vpsaff.net/linux/speedtest/superbench.sh)\n' | tee -a $log
+	printf ' Usage : wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/if1y/ScriptMOD/mixbench/mixbench.sh && chmod +x mixbench.sh && bash mixbench.sh\n' | tee -a $log
 }
 
 sharetest() {
@@ -717,7 +718,7 @@ sharetest() {
 	log_preupload
 	case $1 in
 	'ubuntu')
-		share_link="https://paste.ubuntu.com"$( curl -v --data-urlencode "content@$log_up" -d "poster=superbench.sh" -d "syntax=text" "https://paste.ubuntu.com" 2>&1 | \
+		share_link="https://paste.ubuntu.com"$( curl -v --data-urlencode "content@$log_up" -d "poster=mixbench.sh" -d "syntax=text" "https://paste.ubuntu.com" 2>&1 | \
 			grep "Location" | awk '{print $3}' );;
 	'haste' )
 		share_link=$( curl -X POST -s -d "$(cat $log)" https://hastebin.com/documents | awk -F '"' '{print "https://hastebin.com/"$4}' );;
@@ -735,9 +736,9 @@ sharetest() {
 }
 
 log_preupload() {
-	log_up="$HOME/superbench_upload.log"
+	log_up="$HOME/mixbench_upload.log"
 	true > $log_up
-	$(cat superbench.log 2>&1 | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" > $log_up)
+	$(cat mixbench.log 2>&1 | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" > $log_up)
 }
 
 cleanup() {
@@ -798,7 +799,7 @@ fast_bench(){
 	cleanup;
 }
 
-log="./superbench.log"
+log="./mixbench.log"
 true > $log
 speedLog="./speedtest.log"
 true > $speedLog
