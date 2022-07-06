@@ -7,6 +7,12 @@ Thanks for all their original authors.
 
 ## Usage
 
+### [mixbench](https://github.com/rshinesun/SuperBench/blob/main/superbench.sh)
+
+```
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/if1y/ScriptMOD/mixbench/mixbench.sh && chmod +x mixbench.sh && bash mixbench.sh
+```
+
 ### [superspeed](https://github.com/ernisn/superspeed/blob/master/superspeed.sh)
 
 ```
